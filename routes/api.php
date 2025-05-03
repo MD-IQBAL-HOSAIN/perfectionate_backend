@@ -4,8 +4,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\Authentication\AuthController;
 use App\Http\Controllers\API\CMS\CmsController;
 use App\Http\Controllers\API\Logo\LogoController;
-use App\Http\Controllers\API\ourNumber\OurNumberController;
-use App\Http\Controllers\API\Review\ReviewController;
 use App\Http\Controllers\API\SocialLogin\SocialLoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,9 +50,6 @@ Route::controller(CmsController::class)->group(function () {
     Route::get('/our-mission/all', 'ourMission');
     Route::get('/contact-info/all', 'contactInfo');
     Route::get('/social/media/all', 'socialMedia');
-    //Blog
-    Route::get('/blog/all', 'blog');
-    Route::get('/blog/details/{id}', 'blogDetails');
 });
 
 //Logo list
@@ -62,17 +57,6 @@ Route::controller(LogoController::class)->group(function () {
     Route::get('/logo', 'logo');
     Route::get('/coppyright/text', 'coppyrightText');
     Route::get('/aboute/system', 'abouteSystem');
-});
-
-//our numbers
-Route::controller(OurNumberController::class)->group(function () {
-    Route::get('/our/number/list', 'index');
-});
-
-//Review and Rating
-Route::controller(ReviewController::class)->group(function () {
-    Route::get('/review/get', 'index');
-    Route::get('/average/review', 'averageRating');
 });
 
 
@@ -95,12 +79,6 @@ Route::middleware('auth:api')->group(function () {
 
         //user profile retrieve
         Route::get('/user/profile/get', 'ProfileGet');
-    });
-
-
-    //Review and Rating
-    Route::controller(ReviewController::class)->group(function () {
-        Route::post('/review/store', 'store');
     });
 
 
