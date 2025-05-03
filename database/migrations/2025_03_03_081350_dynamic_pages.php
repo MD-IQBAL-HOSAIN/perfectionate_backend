@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('dynamic_pages', function (Blueprint $table) {
             $table->id();
-            // $table->string('page_title')->nullable(false);
-            // $table->string('page_content')->nullable(false);
             $table->json('page_title');
             $table->json('page_content');
             $table->enum('status', ['active', 'inactive'])->default('active')->nullable(false);

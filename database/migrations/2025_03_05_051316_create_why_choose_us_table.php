@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('why_choose_us', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('title')->nullable();
-            $table->string('subtitle')->nullable();
+            $table->json('page_title');
+            $table->json('title');
+            $table->json('subtitle');
+            $table->json('body_title');
+            $table->json('description');
             $table->string('image')->nullable();
-            $table->string('body_title')->nullable();
-            $table->text('description')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });

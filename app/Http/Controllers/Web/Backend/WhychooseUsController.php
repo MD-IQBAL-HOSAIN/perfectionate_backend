@@ -96,40 +96,65 @@ class WhychooseUsController extends Controller
 
     //store
     public function store(Request $request)
-    {
-        // Validate the incoming request
-        $request->validate([
-            'name'          => 'required|string|max:255',
-            'title'         => 'required|string|max:255',
-            'subtitle'      => 'required|string|max:500',
-            'image'         => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
-            'body_title'    => 'required|string|max:255',
-            'description'   => 'required|string|max:500'
+{
+    // Validate the incoming request
+    $request->validate([
+        'name_en'          => 'required|string|max:255',
+        'name_ar'          => 'required|string|max:255',
+        'title_en'         => 'required|string|max:255',
+        'title_ar'         => 'required|string|max:255',
+        'subtitle_en'      => 'required|string|max:500',
+        'subtitle_ar'      => 'required|string|max:500',
+        'body_title_en'    => 'required|string|max:255',
+        'body_title_ar'    => 'required|string|max:255',
+        'description_en'   => 'required|string|max:500',
+        'description_ar'   => 'required|string|max:500',
+        'image'            => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+    ]);
+
+    try {
+        $data = new WhyChooseUs();
+
+        // Set translations for each field
+        $data->setTranslations('name', [
+            'en' => $request->name_en,
+            'ar' => $request->name_ar
         ]);
 
-        try {
-            $data                   = new WhyChooseUs();
-            $data->name             = $request->name;
-            $data->title            = $request->title;
-            $data->subtitle         = $request->subtitle;
-            $data->body_title       = $request->body_title;
-            $data->description      = $request->description;
+        $data->setTranslations('title', [
+            'en' => $request->title_en,
+            'ar' => $request->title_ar
+        ]);
 
-            if ($request->hasFile('image')) {
-                $imagePath = Helper::fileUpload($request->file('image'), 'WhyChooseUs', time() . '_' . $request->file('image')->getClientOriginalName());
-                if ($imagePath !== null) {
-                    $data->image = $imagePath;
-                }
+        $data->setTranslations('subtitle', [
+            'en' => $request->subtitle_en,
+            'ar' => $request->subtitle_ar
+        ]);
+
+        $data->setTranslations('body_title', [
+            'en' => $request->body_title_en,
+            'ar' => $request->body_title_ar
+        ]);
+
+        $data->setTranslations('description', [
+            'en' => $request->description_en,
+            'ar' => $request->description_ar
+        ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = Helper::fileUpload($request->file('image'), 'WhyChooseUs', time() . '_' . $request->file('image')->getClientOriginalName());
+            if ($imagePath !== null) {
+                $data->image = $imagePath;
             }
-
-            $data->save();
-
-            // Redirect or return a response
-            return redirect()->route('why-choose-us.index')->with('t-success', 'Data added successfully!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('t-error', 'Something went wrong!');
         }
+
+        $data->save();
+
+        return redirect()->route('why-choose-us.index')->with('t-success', 'Data added successfully!');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('t-error', 'Something went wrong!');
     }
+}
 
     //status update
     public function status(int $id): JsonResponse
