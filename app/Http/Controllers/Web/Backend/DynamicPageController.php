@@ -71,27 +71,41 @@ class DynamicPageController
 
     public function update(Request $request, int $id): RedirectResponse
     {
+
+        // Validate
+        $data = $request->validate([
+            'page_title_en'   => 'required|string|max:255',
+            'page_title_ar'   => 'required|string|max:255',
+            'page_content_en' => 'required|string',
+            'page_content_ar' => 'required|string'
+        ]);
+
         try {
-            $validator = Validator::make($request->all(), [
-                'page_title' => 'required|string|max:255',
-                'page_content' => 'required|string',
+            $page = DynamicPage::findOrFail($id);
+
+            // Translations set
+            $page->setTranslations('page_title', [
+                'en' => $data['page_title_en'],
+                'ar' => $data['page_title_ar'],
+            ]);
+            $page->setTranslations('page_content', [
+                'en' => $data['page_content_en'],
+                'ar' => $data['page_content_ar'],
             ]);
 
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
+            // Save & Redirect
+            $page->save();
 
-            $data = DynamicPage::findOrFail($id);
-            $data->page_title = $request->page_title;
-            $data->page_content = $request->page_content;
-            $data->save();
-
-            return redirect()->route('dynamic.index')->with('t-success', 'Updated Successfully.');
-        } catch (Exception $e) {
-            // dd($e);
-            return redirect()->back()->with('t-error', 'Something went wrong!');
+            return redirect()
+                ->route('dynamic.index')
+                ->with('t-success', 'Page updated successfully.');
+        } catch (\Exception $exception) {
+            return redirect()
+                ->back()
+                ->with('t-error', 'Something went wrong. Please try again later.');
         }
     }
+
 
     /* dynamic Status start */
     public function status(int $id): JsonResponse
