@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Web\Backend;
 
-use App\Helpers\Helper;
-use App\Models\DynamicPage;
 use Exception;
+use App\Helpers\Helper;
+use Illuminate\View\View;
+use App\Models\DynamicPage;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\View\View;
-use Yajra\DataTables\DataTables;
 
 class DynamicPageController
 {
@@ -27,18 +28,27 @@ class DynamicPageController
             $data = DynamicPage::latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
+
                 ->addColumn('page_title', function ($row) {
                     $en = $row->getTranslation('page_title', 'en');
                     $ar = $row->getTranslation('page_title', 'ar');
-                    return '<strong></strong> ' . e($en) . '<br>'
-                        . '<strong></strong> <span dir="rtl">' . e($ar) . '</span>';
+
+                    $en_short = Str::limit(strip_tags($en), 50, '...');
+                    $ar_short = Str::limit(strip_tags($ar), 50, '...');
+
+                    return '' . e($en_short) . '<br>'
+                         . '<span dir="rtl">' . e($ar_short) . '</span>';
                 })
 
                 ->addColumn('page_content', function ($row) {
                     $en = $row->getTranslation('page_content', 'en');
                     $ar = $row->getTranslation('page_content', 'ar');
-                    return '<div><strong></strong><br>' . $en . '</div>'
-                        . '<div dir="rtl"><strong></strong><br>' . $ar . '</div>';
+
+                    $en_short = Str::limit(strip_tags($en), 100, '...');
+                    $ar_short = Str::limit(strip_tags($ar), 100, '...');
+
+                    return '<div><br>' . $en_short . '</div>'
+                         . '<div dir="rtl"><br>' . $ar_short . '</div>';
                 })
 
                 ->addColumn('status', function ($data) {
