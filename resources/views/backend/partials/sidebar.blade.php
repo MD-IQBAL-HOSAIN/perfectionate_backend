@@ -1,7 +1,9 @@
 <aside class="sidebar-nav-wrapper">
     <div class="navbar-logo d-flex align-items-center justify-content-center">
         <a href="{{ route('dashboard') }}">
-            <img class="img-fluid" src="{{ $setting && $setting->logo ? asset($setting->logo) : asset('backend/images/logo/logo-icon-big.svg') }}" alt="Logo" />           
+            <img class="img-fluid"
+                src="{{ $setting && $setting->logo ? asset($setting->logo) : asset('backend/images/logo/logo-icon-big.svg') }}"
+                alt="Logo" />
         </a>
     </div>
 
@@ -26,72 +28,95 @@
             </li>
             {{-- User List end --}}
 
-            <li class="nav-item nav-item-has-children active show {{ Request::routeIs(['home.banner*', 'about.banner*', 'blog.banner*', 'blog.banner.details*', 'contact.banner*', 'personal.reminder*', 'feel.top.edit*', 'login.banner.edit*', 'contact.edit*', 'mission.edit*', 'value.edit*', 'signup.banner.edit*'])  ? 'active show' : '' }}">
-                <a class="{{ Request::routeIs(['home.banner*', 'about.banner*', 'blog.banner*', 'blog.banner.details*', 'contact.banner*', 'personal.reminder*', 'feel.top.edit*', 'login.banner.edit*', 'contact.edit*', 'mission.edit*', 'value.edit*', 'signup.banner.edit*']) ? 'active' : '' }}" href="#" data-bs-toggle="collapse" data-bs-target="#cms" aria-controls="cms"
-                    aria-expanded="{{ Request::routeIs(['home.banner*', 'about.banner*', 'blog.banner*', 'blog.banner.details*', 'contact.banner*', 'personal.reminder*', 'feel.top.edit*', 'login.banner.edit*', 'contact.edit*', 'mission.edit*', 'value.edit*', 'signup.banner.edit*']) ? 'true' : 'false' }}" aria-label="Toggle navigation">
+            <li
+                class="nav-item nav-item-has-children active show {{ Request::routeIs(['home*']) ? 'active show' : '' }}">
+                <a class="{{ Request::routeIs(['home*']) ? 'active' : 'text-secondary' }}" href="#"
+                    data-bs-toggle="collapse" data-bs-target="#cms" aria-controls="cms"
+                    aria-expanded="{{ Request::routeIs(['home*']) ? 'true' : 'false' }}" aria-label="Toggle navigation">
                     <span class="icon">
                         <i class="bi bi-music-player-fill menu-icon"></i>
                     </span>
                     <span class="text">CMS</span>
                 </a>
-                <ul id="cms" class="collapse dropdown-nav {{ Request::routeIs(['home.content*', 'home.banner*', 'about.banner*', 'blog.banner*', 'blog.banner.details*', 'contact.banner*', 'personal.reminder*', 'feel.top.edit*', 'login.banner.edit*', 'contact.edit*', 'mission.edit*', 'value.edit*', 'signup.banner.edit*']) ? 'show' : '' }}">
+                <ul id="cms"
+                    class="collapse dropdown-nav {{ Request::routeIs(['home.content*']) ? 'show' : '' }}">
                     <li>
-                        <a href="{{ route('home.content.one.edit') }}" class="{{ Request::routeIs('home.content.one.edit') ? 'active' : '' }}"><span class="icon"><i class="bi bi-cassette menu-icon"></i></span>
+                        <a href="{{ route('home.content.one.edit') }}"
+                            class="{{ Request::routeIs('home.content.one.edit') ? 'active' : '' }}"><span
+                                class="icon"><i class="bi bi-cassette menu-icon"></i></span>
                             Home Content One
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('home.content.two.edit') }}" class="{{ Request::routeIs('home.content.two.edit') ? 'active' : '' }}"><span class="icon"><i class="bi bi-cassette menu-icon"></i></span>
-                           Ours Community
+                        <a href="{{ route('home.content.two.edit') }}"
+                            class="{{ Request::routeIs('home.content.two.edit') ? 'active' : '' }}"><span
+                                class="icon"><i class="bi bi-cassette menu-icon"></i></span>
+                            Ours Community
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('home.content.three.edit') }}" class="{{ Request::routeIs('home.content.three.edit') ? 'active' : '' }}"><span class="icon"><i class="bi bi-cassette menu-icon"></i></span>
+                        <a href="{{ route('home.content.three.edit') }}"
+                            class="{{ Request::routeIs('home.content.three.edit') ? 'active' : '' }}"><span
+                                class="icon"><i class="bi bi-cassette menu-icon"></i></span>
                             Home Content Three
                         </a>
                     </li>
-                    
+
                     <li>
-                        <a href="{{ route('home.content.four.edit') }}" class="{{ Request::routeIs('home.content.four.edit') ? 'active' : '' }}"><span class="icon"><i class="bi bi-cassette menu-icon"></i></span>
+                        <a href="{{ route('home.content.four.edit') }}"
+                            class="{{ Request::routeIs('home.content.four.edit') ? 'active' : '' }}"><span
+                                class="icon"><i class="bi bi-cassette menu-icon"></i></span>
                             Home Content Four
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('home.content.five.edit') }}" class="{{ Request::routeIs('home.content.five.edit') ? 'active' : '' }}"><span class="icon"><i class="bi bi-cassette menu-icon"></i></span>
+                        <a href="{{ route('home.content.five.edit') }}"
+                            class="{{ Request::routeIs('home.content.five.edit') ? 'active' : '' }}"><span
+                                class="icon"><i class="bi bi-cassette menu-icon"></i></span>
                             Home Content Five
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('home.content.six.edit') }}" class="{{ Request::routeIs('home.content.six.edit') ? 'active' : '' }}"><span class="icon"><i class="bi bi-cassette menu-icon"></i></span>
+                        <a href="{{ route('home.content.six.edit') }}"
+                            class="{{ Request::routeIs('home.content.six.edit') ? 'active' : '' }}"><span
+                                class="icon"><i class="bi bi-cassette menu-icon"></i></span>
                             Home Content Six
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('home.content.seven.edit') }}" class="{{ Request::routeIs('home.content.seven.edit') ? 'active' : '' }}"><span class="icon"><i class="bi bi-cassette menu-icon"></i></span>
+                        <a href="{{ route('home.content.seven.edit') }}"
+                            class="{{ Request::routeIs('home.content.seven.edit') ? 'active' : '' }}"><span
+                                class="icon"><i class="bi bi-cassette menu-icon"></i></span>
                             join our thousands of satisfied clients
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('home.content.eight.edit') }}" class="{{ Request::routeIs('home.content.eight.edit') ? 'active' : '' }}"><span class="icon"><i class="bi bi-cassette menu-icon"></i></span>
-                           Buy a home page (Finance)
+                        <a href="{{ route('home.content.eight.edit') }}"
+                            class="{{ Request::routeIs('home.content.eight.edit') ? 'active' : '' }}"><span
+                                class="icon"><i class="bi bi-cassette menu-icon"></i></span>
+                            Buy a home page (Finance)
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('home.content.nine.edit') }}" class="{{ Request::routeIs('home.content.nine.edit') ? 'active' : '' }}"><span class="icon"><i class="bi bi-cassette menu-icon"></i></span>
-                           Loan Page Banner
+                        <a href="{{ route('home.content.nine.edit') }}"
+                            class="{{ Request::routeIs('home.content.nine.edit') ? 'active' : '' }}"><span
+                                class="icon"><i class="bi bi-cassette menu-icon"></i></span>
+                            Loan Page Banner
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('home.content.ten.edit') }}" class="{{ Request::routeIs('home.content.ten.edit') ? 'active' : '' }}"><span class="icon"><i class="bi bi-cassette menu-icon"></i></span>
-                           Loan Page Content One
+                        <a href="{{ route('home.content.ten.edit') }}"
+                            class="{{ Request::routeIs('home.content.ten.edit') ? 'active' : '' }}"><span
+                                class="icon"><i class="bi bi-cassette menu-icon"></i></span>
+                            Loan Page Content One
                         </a>
                     </li>
-                    
+
                 </ul>
             </li>
 
             {{-- FAQ strat --}}
-            <li class="nav-item {{ Request::routeIs('faq*','faq.edit') ? 'active' : '' }}">
+            <li class="nav-item {{ Request::routeIs('faq*', 'faq.edit') ? 'active' : '' }}">
                 <a href="{{ route('faq.index') }}" class="{{ Request::routeIs('faq*') ? 'active' : '' }}">
                     <span class="icon">
                         <i class="bi bi-question-circle menu-icon"></i>
@@ -102,8 +127,9 @@
             {{-- FAQ end --}}
 
             {{-- Why choose Us strat --}}
-            <li class="nav-item {{ Request::routeIs('why-choose-us.index*','why-choose-us.show') ? 'active' : '' }}">
-                <a href="{{ route('why-choose-us.index') }}" class="{{ Request::routeIs('why-choose-us.index*') ? 'active' : '' }}">
+            <li class="nav-item {{ Request::routeIs('why-choose-us.index*', 'why-choose-us.show') ? 'active' : '' }}">
+                <a href="{{ route('why-choose-us.index') }}"
+                    class="{{ Request::routeIs('why-choose-us.index*') ? 'active' : '' }}">
                     <span class="icon">
                         <i class="bi bi-hand-thumbs-up-fill menu-icon"></i>
                     </span>
@@ -112,19 +138,30 @@
             </li>
             {{-- Why choose Us end --}}
 
-            
+
             <span class="divider">
                 <hr />
             </span>
 
             <li class="nav-item nav-item-has-children active show">
-                <a href="#" data-bs-toggle="collapse" data-bs-target="#settings" aria-controls="settings"
+               {{--  <a href="#" data-bs-toggle="collapse" data-bs-target="#settings" aria-controls="settings"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="icon">
                         <i class="bi bi-gear-fill menu-icon"></i>
                     </span>
                     <span class="text">Settings</span>
+                </a> --}}
+
+                <a class="{{ (Request::routeIs(['profile*', 'system*', 'mail*', 'social*', 'dynamic*', 'stripe*'])) ? 'active' : 'text-secondary' }}" href="#"
+                    data-bs-toggle="collapse" data-bs-target="#settings" aria-controls="cms"
+                    aria-expanded="{{ Request::routeIs(['profile*', 'system*', 'mail*', 'social*', 'dynamic*', 'stripe*']) ? 'true' : 'false' }}"
+                    aria-label="Toggle navigation">
+                    <span class="icon">
+                        <i class="bi bi-gear-fill menu-icon"></i>
+                    </span>
+                    <span class="text">Settings</span>
                 </a>
+
                 <ul id="settings"
                     class="collapse dropdown-nav {{ Request::routeIs(['profile*', 'system*', 'mail*', 'social*', 'dynamic*', 'stripe*']) ? 'show active' : '' }}">
                     <li>

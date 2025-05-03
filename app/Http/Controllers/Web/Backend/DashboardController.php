@@ -16,7 +16,6 @@ class DashboardController extends Controller
     public function index(): View
     {
         $total_users = User::where('status', 'active')->count();
-        $total_blog = Blog::where('status', 'active')->count();
 
 
         /*For user count start  */
@@ -62,9 +61,9 @@ class DashboardController extends Controller
             }),
         ];
         /*For user count end  */
-       
 
 
-        return view('backend.layouts.dashboard', compact('total_users','total_blog', 'chartData'));
+
+        return view('backend.layouts.dashboard', compact('total_users', 'chartData'));
     }
 }

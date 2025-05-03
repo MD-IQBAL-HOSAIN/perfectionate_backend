@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             DynamicPageSeeder::class,
             CmsSeeder::class,
-            ValueWeOfferSeeder::class,
         ]);
     }
 }

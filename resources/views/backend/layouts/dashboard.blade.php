@@ -95,7 +95,7 @@
                 </div>
                 <div class="content text-center mt-3">
                     <h6 class="mb-10">Total Blogs</h6>
-                    <h3 class="text-bold">{{ $total_blog ?? 0 }}</h3>
+                    {{-- <h3 class="text-bold">{{ $total_blog ?? 0 }}</h3> --}}
                     <p class="text-sm text-success">
                 </div>
             </div>
@@ -234,5 +234,5 @@
             chart.render();
         });
     </script>
-    
+
 @endpush

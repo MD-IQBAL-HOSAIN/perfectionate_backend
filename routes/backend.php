@@ -1,21 +1,15 @@
 <?php
 
-use App\Http\Controllers\Web\Backend\BlogController;
 use App\Http\Controllers\Web\Backend\CmsController;
 use App\Http\Controllers\Web\Backend\DashboardController;
 use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\FaqController;
-use App\Http\Controllers\Web\Backend\FeelTopOnTheWorldController;
-use App\Http\Controllers\Web\Backend\HomeContentOneController;
-use App\Http\Controllers\Web\Backend\OurKeyHighlightController;
-use App\Http\Controllers\Web\Backend\OurMissionController;
 use App\Http\Controllers\Web\Backend\Settings\MailSettingController;
 use App\Http\Controllers\Web\Backend\Settings\ProfileController;
 use App\Http\Controllers\Web\Backend\Settings\StripeSettingController;
 use App\Http\Controllers\Web\Backend\Settings\SystemSettingController;
 use App\Http\Controllers\Web\Backend\SocialMediaController;
 use App\Http\Controllers\Web\Backend\UserController;
-use App\Http\Controllers\Web\Backend\ValueWeOfferController;
 use App\Http\Controllers\Web\Backend\WhychooseUsController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -89,7 +83,7 @@ Route::middleware([AdminMiddleware::class])->group(function () {
         Route::get('/home/content/ten/edit', 'HomeContentTenEdit')->name('home.content.ten.edit');
         Route::post('/home/content/ten/update', 'HomeContentTenUpdate')->name('home.content.ten.update');
 
-       
+
     });
 
     //route for Dynamic page
@@ -151,5 +145,5 @@ Route::middleware([AdminMiddleware::class])->group(function () {
 
 
 
-    
+
 });

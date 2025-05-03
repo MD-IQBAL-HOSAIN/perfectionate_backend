@@ -39,8 +39,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header border-bottom"
-                    style="margin-bottom: 0; display: flex; justify-content: space-between;">
-                    <h3 class="card-title">Why Choose Us Table</h3>
+                    style="margin-bottom: 0; display: flex; justify-content: flex-end;">
                     <a href="{{ route('why-choose-us.create') }}" class="btn btn-primary">Add New</a>
                 </div>
                 <div class="card-body">
