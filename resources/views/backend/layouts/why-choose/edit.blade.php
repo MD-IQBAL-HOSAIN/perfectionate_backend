@@ -46,36 +46,73 @@
                         @csrf
                         @method('PUT')
 
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                   name="name" placeholder="Enter name" id="name"
-                                   value="{{ old('name', $item->name) }}" required>
-                            @error('name')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                        <!-- Name Fields -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="name_en" class="form-label">Name (English)</label>
+                                <input type="text" class="form-control @error('name_en') is-invalid @enderror"
+                                       name="name_en" placeholder="Enter name in English" id="name_en"
+                                       value="{{ old('name_en', $item->getTranslation('name', 'en')) }}">
+                                @error('name_en')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="name_ar" class="form-label">Name (Arabic)</label>
+                                <input type="text" class="form-control @error('name_ar') is-invalid @enderror" dir="rtl"
+                                       name="name_ar" placeholder="أدخل الاسم بالعربية" id="name_ar"
+                                       value="{{ old('name_ar', $item->getTranslation('name', 'ar')) }}">
+                                @error('name_ar')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control @error('title') is-invalid @enderror"
-                                   name="title" placeholder="Enter title" id="title"
-                                   value="{{ old('title', $item->title) }}" required>
-                            @error('title.en')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                        <!-- Title Fields -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="title_en" class="form-label">Title (English)</label>
+                                <input type="text" class="form-control @error('title_en') is-invalid @enderror"
+                                       name="title_en" placeholder="Enter title in English" id="title_en"
+                                       value="{{ old('title_en', $item->getTranslation('title', 'en')) }}">
+                                @error('title_en')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="title_ar" class="form-label">Title (Arabic)</label>
+                                <input type="text" class="form-control @error('title_ar') is-invalid @enderror" dir="rtl"
+                                       name="title_ar" placeholder="أدخل العنوان بالعربية" id="title_ar"
+                                       value="{{ old('title_ar', $item->getTranslation('title', 'ar')) }}">
+                                @error('title_ar')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="subtitle" class="form-label">Subtitle</label>
-                            <input type="text" class="form-control @error('subtitle') is-invalid @enderror"
-                                   name="subtitle" placeholder="Enter subtitle" id="subtitle"
-                                   value="{{ old('subtitle', $item->subtitle) }}" required>
-                            @error('subtitle')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                        <!-- Subtitle Fields -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="subtitle_en" class="form-label">Subtitle (English)</label>
+                                <input type="text" class="form-control @error('subtitle_en') is-invalid @enderror"
+                                       name="subtitle_en" placeholder="Enter subtitle in English" id="subtitle_en"
+                                       value="{{ old('subtitle_en', $item->getTranslation('subtitle', 'en')) }}">
+                                @error('subtitle_en')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="subtitle_ar" class="form-label">Subtitle (Arabic)</label>
+                                <input type="text" class="form-control @error('subtitle_ar') is-invalid @enderror" dir="rtl"
+                                       name="subtitle_ar" placeholder="أدخل العنوان الفرعي بالعربية" id="subtitle_ar"
+                                       value="{{ old('subtitle_ar', $item->getTranslation('subtitle', 'ar')) }}">
+                                @error('subtitle_ar')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
 
+                        <!-- Image Field -->
                         <div class="mb-3">
                             <label for="image" class="form-label">Image</label>
                             <input type="file" name="image" id="image" class="form-control dropify"
@@ -85,26 +122,55 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label for="body_title" class="form-label">Body Title</label>
-                            <input type="text" class="form-control @error('body_title') is-invalid @enderror"
-                                   name="body_title" placeholder="Enter body title" id="body_title"
-                                   value="{{ old('body_title', $item->body_title) }}" required>
-                            @error('body_title')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                        <!-- Body Title Fields -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="body_title_en" class="form-label">Body Title (English)</label>
+                                <input type="text" class="form-control @error('body_title_en') is-invalid @enderror"
+                                       name="body_title_en" placeholder="Enter body title in English" id="body_title_en"
+                                       value="{{ old('body_title_en', $item->getTranslation('body_title', 'en')) }}">
+                                @error('body_title_en')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="body_title_ar" class="form-label">Body Title (Arabic)</label>
+                                <input type="text" class="form-control @error('body_title_ar') is-invalid @enderror" dir="rtl"
+                                       name="body_title_ar" placeholder="أدخل عنوان الجسم بالعربية" id="body_title_ar"
+                                       value="{{ old('body_title_ar', $item->getTranslation('body_title', 'ar')) }}">
+                                @error('body_title_ar')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea name="description" id="description" rows="4" class="form-control" placeholder="Enter description" required>{{ old('description', $item->description) }}</textarea>
-                            @error('description')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                        <!-- Description Fields -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="description_en" class="form-label">Description (English)</label>
+                                <textarea name="description_en" id="description_en" rows="4"
+                                          class="form-control" placeholder="Enter description in English">
+                                    {{ old('description_en', $item->getTranslation('description', 'en')) }}
+                                </textarea>
+                                @error('description_en')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="description_ar" class="form-label">Description (Arabic)</label>
+                                <textarea name="description_ar" id="description_ar" rows="4"
+                                          class="form-control" dir="rtl" placeholder="أدخل الوصف بالعربية">
+                                    {{ old('description_ar', $item->getTranslation('description', 'ar')) }}
+                                </textarea>
+                                @error('description_ar')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
+
                 </div>
             </div>
         </div>

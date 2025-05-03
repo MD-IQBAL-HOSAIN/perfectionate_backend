@@ -197,51 +197,70 @@ class WhychooseUsController extends Controller
 
     //update
     public function update(Request $request, $id)
-    {
-        try {
-            // Validate the incoming request
-            $validator = Validator::make($request->all(), [
-                'name'          => 'nullable|string|max:255',
-                'title'         => 'nullable|string|max:255',
-                'subtitle'      => 'nullable|string|max:500',
-                'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
-                'body_title'    => 'nullable|string|max:255',
-                'description'   => 'nullable|string|max:500'
-            ]);
+{
+    // Validate the incoming request
+    $request->validate([
+        'name_en'          => 'nullable|string|max:255',
+        'name_ar'          => 'nullable|string|max:255',
+        'title_en'         => 'nullable|string|max:255',
+        'title_ar'         => 'nullable|string|max:255',
+        'subtitle_en'      => 'nullable|string|max:500',
+        'subtitle_ar'      => 'nullable|string|max:500',
+        'body_title_en'    => 'nullable|string|max:255',
+        'body_title_ar'    => 'nullable|string|max:255',
+        'description_en'   => 'nullable|string|max:500',
+        'description_ar'   => 'nullable|string|max:500',
+        'image'            => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+    ]);
 
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
+    try {
+        $data = WhyChooseUs::findOrFail($id);
+
+        // Update translations for each field
+        $data->setTranslations('name', [
+            'en' => $request->name_en,
+            'ar' => $request->name_ar
+        ]);
+
+        $data->setTranslations('title', [
+            'en' => $request->title_en,
+            'ar' => $request->title_ar
+        ]);
+
+        $data->setTranslations('subtitle', [
+            'en' => $request->subtitle_en,
+            'ar' => $request->subtitle_ar
+        ]);
+
+        $data->setTranslations('body_title', [
+            'en' => $request->body_title_en,
+            'ar' => $request->body_title_ar
+        ]);
+
+        $data->setTranslations('description', [
+            'en' => $request->description_en,
+            'ar' => $request->description_ar
+        ]);
+
+        // Handle the image upload
+        if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($data->image) {
+                Helper::fileDelete($data->image);
             }
 
-            // Fetch the existing data using id
-            $data = WhyChooseUs::findOrFail($id);
-
-            // Update fields
-            $data->name         = $request->name;
-            $data->title        = $request->title;
-            $data->subtitle     = $request->subtitle;
-            $data->body_title   = $request->body_title;
-            $data->description  = $request->description;
-
-            // Handle the image upload
-            if ($request->hasFile('image')) {
-                // Delete the old image if it exists
-                if ($data->image) {
-                    Helper::fileDelete($data->image);
-                }
-
-                // Upload the new image
-                $imagePath = Helper::fileUpload($request->file('image'), 'WhyChooseUs', time() . '_' . $request->file('image')->getClientOriginalName());
-                $data->image = $imagePath;
-            }
-
-            $data->save();
-
-            return redirect()->route('why-choose-us.index')->with('t-success', 'Record updated successfully.');
-        } catch (\Exception $e) {
-            return redirect()->route('why-choose-us.index')->with('t-error', 'Something went wrong. Please try again.');
+            // Upload the new image
+            $imagePath = Helper::fileUpload($request->file('image'), 'WhyChooseUs', time() . '_' . $request->file('image')->getClientOriginalName());
+            $data->image = $imagePath;
         }
+
+        $data->save();
+
+        return redirect()->route('why-choose-us.index')->with('t-success', 'Record updated successfully.');
+    } catch (\Exception $e) {
+        return redirect()->route('why-choose-us.index')->with('t-error', 'Something went wrong. Please try again.');
     }
+}
 
     /**
      * Remove the specified city content from storage.
