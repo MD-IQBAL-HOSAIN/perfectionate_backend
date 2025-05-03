@@ -4206,7 +4206,7 @@ h6,
     a:hover {
     background: initial;
 }
-.btn-profile{ 
+.btn-profile{
     outline: none !important;
 }
 .header .header-right .profile-box .dropdown-menu .author-info:hover {
@@ -9691,9 +9691,9 @@ div.table-responsive > div.dt-container > div.row {
     margin: 14px 0;
 }
 .table td {
-    padding: 15px 0 !important;
+    padding: 15px 0;
 }
 
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.active > a .icon, .sidebar-nav-wrapper .sidebar-nav ul .nav-item.active > a.collapsed .icon, .sidebar-nav-wrapper .sidebar-nav ul .nav-item:hover > a .icon, .sidebar-nav-wrapper .sidebar-nav ul .nav-item:hover > a.collapsed .icon {
-    color: #9aa4ca !important; 
+    color: #9aa4ca !important;
 }
