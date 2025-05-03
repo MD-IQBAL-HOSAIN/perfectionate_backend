@@ -14,7 +14,7 @@ use Yajra\DataTables\DataTables;
 
 class WhychooseUsController extends Controller
 {
-   /**
+    /**
      * Display a listing of city content.
      *
      * @param Request $request
@@ -28,16 +28,39 @@ class WhychooseUsController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('name', function ($data) {
-                    $name = Str::limit($data->name, 30);
-                    return strlen($data->name) > 30 ? $name . '...' : $name;
+                    $en = Str::limit($data->getTranslation('name', 'en'), 30);
+                    $ar = Str::limit($data->getTranslation('name', 'ar'), 30);
+
+                    return '<div>' . e($en) . (strlen($data->getTranslation('name', 'en')) > 30 ? '...' : '') . '</div>' .
+                        '<div dir="rtl">' . e($ar) . (strlen($data->getTranslation('name', 'ar')) > 30 ? '...' : '') . '</div>';
                 })
                 ->addColumn('title', function ($data) {
-                    $title = Str::limit($data->title, 30);
-                    return strlen($data->title) > 30 ? $title . '...' : $title;
+                    $en = Str::limit($data->getTranslation('title', 'en'), 30);
+                    $ar = Str::limit($data->getTranslation('title', 'ar'), 30);
+
+                    return '<div>' . e($en) . (strlen($data->getTranslation('title', 'en')) > 30 ? '...' : '') . '</div>' .
+                        '<div dir="rtl">' . e($ar) . (strlen($data->getTranslation('title', 'ar')) > 30 ? '...' : '') . '</div>';
                 })
                 ->addColumn('subtitle', function ($data) {
-                    $subtitle = Str::limit($data->subtitle, 30);
-                    return strlen($data->subtitle) > 30 ? $subtitle . '...' : $subtitle;
+                    $en = Str::limit($data->getTranslation('subtitle', 'en'), 30);
+                    $ar = Str::limit($data->getTranslation('subtitle', 'ar'), 30);
+
+                    return '<div>' . e($en) . (strlen($data->getTranslation('subtitle', 'en')) > 30 ? '...' : '') . '</div>' .
+                        '<div dir="rtl">' . e($ar) . (strlen($data->getTranslation('subtitle', 'ar')) > 30 ? '...' : '') . '</div>';
+                })
+                ->addColumn('body_title', function ($data) {
+                    $en = Str::limit($data->getTranslation('body_title', 'en'), 30);
+                    $ar = Str::limit($data->getTranslation('body_title', 'ar'), 30);
+
+                    return '<div>' . e($en) . (strlen($data->getTranslation('body_title', 'en')) > 30 ? '...' : '') . '</div>' .
+                        '<div dir="rtl">' . e($ar) . (strlen($data->getTranslation('body_title', 'ar')) > 30 ? '...' : '') . '</div>';
+                })
+                ->addColumn('description', function ($data) {
+                    $en = Str::limit($data->getTranslation('description', 'en'), 30);
+                    $ar = Str::limit($data->getTranslation('description', 'ar'), 30);
+
+                    return '<div>' . e($en) . (strlen($data->getTranslation('description', 'en')) > 30 ? '...' : '') . '</div>' .
+                        '<div dir="rtl">' . e($ar) . (strlen($data->getTranslation('description', 'ar')) > 30 ? '...' : '') . '</div>';
                 })
                 ->addColumn('image', function ($data) {
                     $defaultImage = asset('frontend/no-image.jpg');
@@ -47,14 +70,6 @@ class WhychooseUsController extends Controller
                         $url = $defaultImage;
                     }
                     return '<img src="' . $url . '" alt="Image" width="50px" height="50px">';
-                })
-                ->addColumn('body_title', function ($data) {
-                    $body_title = Str::limit($data->body_title, 30);
-                    return strlen($data->body_title) > 30 ? $body_title . '...' : $body_title;
-                })
-                ->addColumn('description', function ($data) {
-                    $description = Str::limit($data->description, 30);
-                    return strlen($data->description) > 30 ? $description . '...' : $description;
                 })
 
                 ->addColumn('status', function ($data) {
@@ -82,7 +97,7 @@ class WhychooseUsController extends Controller
                                 </a>
                             </div>';
                 })
-                ->rawColumns(['name', 'title', 'subtitle', 'image','body_title', 'description', 'status', 'action'])
+                ->rawColumns(['name', 'title', 'subtitle', 'image', 'body_title', 'description', 'status', 'action'])
                 ->make();
         }
         return view('backend.layouts.why-choose.index');
@@ -96,65 +111,65 @@ class WhychooseUsController extends Controller
 
     //store
     public function store(Request $request)
-{
-    // Validate the incoming request
-    $request->validate([
-        'name_en'          => 'required|string|max:255',
-        'name_ar'          => 'required|string|max:255',
-        'title_en'         => 'required|string|max:255',
-        'title_ar'         => 'required|string|max:255',
-        'subtitle_en'      => 'required|string|max:500',
-        'subtitle_ar'      => 'required|string|max:500',
-        'body_title_en'    => 'required|string|max:255',
-        'body_title_ar'    => 'required|string|max:255',
-        'description_en'   => 'required|string|max:500',
-        'description_ar'   => 'required|string|max:500',
-        'image'            => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
-    ]);
-
-    try {
-        $data = new WhyChooseUs();
-
-        // Set translations for each field
-        $data->setTranslations('name', [
-            'en' => $request->name_en,
-            'ar' => $request->name_ar
+    {
+        // Validate the incoming request
+        $request->validate([
+            'name_en'          => 'required|string|max:255',
+            'name_ar'          => 'required|string|max:255',
+            'title_en'         => 'required|string|max:255',
+            'title_ar'         => 'required|string|max:255',
+            'subtitle_en'      => 'required|string|max:500',
+            'subtitle_ar'      => 'required|string|max:500',
+            'body_title_en'    => 'required|string|max:255',
+            'body_title_ar'    => 'required|string|max:255',
+            'description_en'   => 'required|string|max:500',
+            'description_ar'   => 'required|string|max:500',
+            'image'            => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
 
-        $data->setTranslations('title', [
-            'en' => $request->title_en,
-            'ar' => $request->title_ar
-        ]);
+        try {
+            $data = new WhyChooseUs();
 
-        $data->setTranslations('subtitle', [
-            'en' => $request->subtitle_en,
-            'ar' => $request->subtitle_ar
-        ]);
+            // Set translations for each field
+            $data->setTranslations('name', [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar
+            ]);
 
-        $data->setTranslations('body_title', [
-            'en' => $request->body_title_en,
-            'ar' => $request->body_title_ar
-        ]);
+            $data->setTranslations('title', [
+                'en' => $request->title_en,
+                'ar' => $request->title_ar
+            ]);
 
-        $data->setTranslations('description', [
-            'en' => $request->description_en,
-            'ar' => $request->description_ar
-        ]);
+            $data->setTranslations('subtitle', [
+                'en' => $request->subtitle_en,
+                'ar' => $request->subtitle_ar
+            ]);
 
-        if ($request->hasFile('image')) {
-            $imagePath = Helper::fileUpload($request->file('image'), 'WhyChooseUs', time() . '_' . $request->file('image')->getClientOriginalName());
-            if ($imagePath !== null) {
-                $data->image = $imagePath;
+            $data->setTranslations('body_title', [
+                'en' => $request->body_title_en,
+                'ar' => $request->body_title_ar
+            ]);
+
+            $data->setTranslations('description', [
+                'en' => $request->description_en,
+                'ar' => $request->description_ar
+            ]);
+
+            if ($request->hasFile('image')) {
+                $imagePath = Helper::fileUpload($request->file('image'), 'WhyChooseUs', time() . '_' . $request->file('image')->getClientOriginalName());
+                if ($imagePath !== null) {
+                    $data->image = $imagePath;
+                }
             }
+
+            $data->save();
+
+            return redirect()->route('why-choose-us.index')->with('t-success', 'Data added successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('t-error', 'Something went wrong!');
         }
-
-        $data->save();
-
-        return redirect()->route('why-choose-us.index')->with('t-success', 'Data added successfully!');
-    } catch (\Exception $e) {
-        return redirect()->back()->with('t-error', 'Something went wrong!');
     }
-}
 
     //status update
     public function status(int $id): JsonResponse
@@ -197,70 +212,70 @@ class WhychooseUsController extends Controller
 
     //update
     public function update(Request $request, $id)
-{
-    // Validate the incoming request
-    $request->validate([
-        'name_en'          => 'nullable|string|max:255',
-        'name_ar'          => 'nullable|string|max:255',
-        'title_en'         => 'nullable|string|max:255',
-        'title_ar'         => 'nullable|string|max:255',
-        'subtitle_en'      => 'nullable|string|max:500',
-        'subtitle_ar'      => 'nullable|string|max:500',
-        'body_title_en'    => 'nullable|string|max:255',
-        'body_title_ar'    => 'nullable|string|max:255',
-        'description_en'   => 'nullable|string|max:500',
-        'description_ar'   => 'nullable|string|max:500',
-        'image'            => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
-    ]);
-
-    try {
-        $data = WhyChooseUs::findOrFail($id);
-
-        // Update translations for each field
-        $data->setTranslations('name', [
-            'en' => $request->name_en,
-            'ar' => $request->name_ar
+    {
+        // Validate the incoming request
+        $request->validate([
+            'name_en'          => 'nullable|string|max:255',
+            'name_ar'          => 'nullable|string|max:255',
+            'title_en'         => 'nullable|string|max:255',
+            'title_ar'         => 'nullable|string|max:255',
+            'subtitle_en'      => 'nullable|string|max:500',
+            'subtitle_ar'      => 'nullable|string|max:500',
+            'body_title_en'    => 'nullable|string|max:255',
+            'body_title_ar'    => 'nullable|string|max:255',
+            'description_en'   => 'nullable|string|max:500',
+            'description_ar'   => 'nullable|string|max:500',
+            'image'            => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
 
-        $data->setTranslations('title', [
-            'en' => $request->title_en,
-            'ar' => $request->title_ar
-        ]);
+        try {
+            $data = WhyChooseUs::findOrFail($id);
 
-        $data->setTranslations('subtitle', [
-            'en' => $request->subtitle_en,
-            'ar' => $request->subtitle_ar
-        ]);
+            // Update translations for each field
+            $data->setTranslations('name', [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar
+            ]);
 
-        $data->setTranslations('body_title', [
-            'en' => $request->body_title_en,
-            'ar' => $request->body_title_ar
-        ]);
+            $data->setTranslations('title', [
+                'en' => $request->title_en,
+                'ar' => $request->title_ar
+            ]);
 
-        $data->setTranslations('description', [
-            'en' => $request->description_en,
-            'ar' => $request->description_ar
-        ]);
+            $data->setTranslations('subtitle', [
+                'en' => $request->subtitle_en,
+                'ar' => $request->subtitle_ar
+            ]);
 
-        // Handle the image upload
-        if ($request->hasFile('image')) {
-            // Delete the old image if it exists
-            if ($data->image) {
-                Helper::fileDelete($data->image);
+            $data->setTranslations('body_title', [
+                'en' => $request->body_title_en,
+                'ar' => $request->body_title_ar
+            ]);
+
+            $data->setTranslations('description', [
+                'en' => $request->description_en,
+                'ar' => $request->description_ar
+            ]);
+
+            // Handle the image upload
+            if ($request->hasFile('image')) {
+                // Delete the old image if it exists
+                if ($data->image) {
+                    Helper::fileDelete($data->image);
+                }
+
+                // Upload the new image
+                $imagePath = Helper::fileUpload($request->file('image'), 'WhyChooseUs', time() . '_' . $request->file('image')->getClientOriginalName());
+                $data->image = $imagePath;
             }
 
-            // Upload the new image
-            $imagePath = Helper::fileUpload($request->file('image'), 'WhyChooseUs', time() . '_' . $request->file('image')->getClientOriginalName());
-            $data->image = $imagePath;
+            $data->save();
+
+            return redirect()->route('why-choose-us.index')->with('t-success', 'Record updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('why-choose-us.index')->with('t-error', 'Something went wrong. Please try again.');
         }
-
-        $data->save();
-
-        return redirect()->route('why-choose-us.index')->with('t-success', 'Record updated successfully.');
-    } catch (\Exception $e) {
-        return redirect()->route('why-choose-us.index')->with('t-error', 'Something went wrong. Please try again.');
     }
-}
 
     /**
      * Remove the specified city content from storage.
