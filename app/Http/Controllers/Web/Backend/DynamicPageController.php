@@ -27,13 +27,18 @@ class DynamicPageController
             $data = DynamicPage::latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('page_title', function ($data) {
-                    $page_title = $data->page_title;
-                    return $page_title;
+                ->addColumn('page_title', function ($row) {
+                    $en = $row->getTranslation('page_title', 'en');
+                    $ar = $row->getTranslation('page_title', 'ar');
+                    return '<strong></strong> ' . e($en) . '<br>'
+                        . '<strong></strong> <span dir="rtl">' . e($ar) . '</span>';
                 })
-                ->addColumn('page_content', function ($data) {
-                    $page_content = $data->page_content;
-                    return $page_content;
+
+                ->addColumn('page_content', function ($row) {
+                    $en = $row->getTranslation('page_content', 'en');
+                    $ar = $row->getTranslation('page_content', 'ar');
+                    return '<div><strong></strong><br>' . $en . '</div>'
+                        . '<div dir="rtl"><strong></strong><br>' . $ar . '</div>';
                 })
 
                 ->addColumn('status', function ($data) {
