@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Web\Backend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Faq;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Validator;
 
 class FaqController extends Controller
 {
@@ -27,12 +28,16 @@ class FaqController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('question', function ($data) {
-                    $question = $data->question;
-                    return $question;
+                    $en = Str::limit($data->getTranslation('question', 'en'), 30);
+                    $ar = Str::limit($data->getTranslation('question', 'ar'), 30);
+                    return '<div>' . e($en) . (strlen($data->getTranslation('question', 'en')) > 30 ? '...' : '') . '</div>' .
+                        '<div dir="rtl">' . e($ar) . (strlen($data->getTranslation('question', 'ar')) > 30 ? '...' : '') . '</div>';
                 })
                 ->addColumn('answer', function ($data) {
-                    $answer = $data->answer;
-                    return $answer;
+                    $en = Str::limit($data->getTranslation('answer', 'en'), 30);
+                    $ar = Str::limit($data->getTranslation('answer', 'ar'), 30);
+                    return '<div>' . e($en) . (strlen($data->getTranslation('answer', 'en')) > 30 ? '...' : '') . '</div>' .
+                        '<div dir="rtl">' . e($ar) . (strlen($data->getTranslation('answer', 'ar')) > 30 ? '...' : '') . '</div>';
                 })
 
                 ->addColumn('status', function ($data) {
@@ -89,8 +94,8 @@ class FaqController extends Controller
             $validator = Validator::make($request->all(), [
                 'question_en'          => 'required|string|max:255',
                 'question_ar'          => 'required|string|max:255',
-                'answer_en'            => 'required|string|max:255',
-                'answer_ar'            => 'required|string|max:255',
+                'answer_en'            => 'required|string|max:500',
+                'answer_ar'            => 'required|string|max:500',
             ]);
 
             if ($validator->fails()) {
@@ -139,8 +144,10 @@ class FaqController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'question'          => 'nullable|string|max:255',
-                'answer'            => 'nullable|string|max:255',
+                'question_en'          => 'nullable|string|max:255',
+                'question_ar'          => 'nullable|string|max:255',
+                'answer_en'            => 'nullable|string|max:500',
+                'answer_ar'            => 'nullable|string|max:500',
             ]);
 
             if ($validator->fails()) {
@@ -148,13 +155,22 @@ class FaqController extends Controller
             }
 
             $data                   = Faq::findOrFail($id);
-            $data->question         = $request->question;
-            $data->answer           = $request->answer;
+
+            $data->setTranslations('question', [
+                'en' => $request->question_en,
+                'ar' => $request->question_ar
+            ]);
+
+            $data->setTranslations('answer', [
+                'en' => $request->answer_en,
+                'ar' => $request->answer_ar
+            ]);
+
             $data->update();
 
-            return redirect()->route('faq.index')->with('t-success', 'Faq Updated Successfully.');
+            return redirect()->route('faq.index')->with('t-success', 'FAQ Updated Successfully.');
         } catch (\Exception) {
-            return redirect()->route('faq.index')->with('t-success', 'Faq failed to update');
+            return redirect()->route('faq.index')->with('t-success', 'FAQ failed to update');
         }
     }
 
@@ -202,12 +218,12 @@ class FaqController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Faq deleted successfully.',
+                'message' => 'FAQ deleted successfully.',
             ]);
         } catch (\Exception) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete the Faq.',
+                'message' => 'Failed to delete the FAQ.',
             ]);
         }
     }
