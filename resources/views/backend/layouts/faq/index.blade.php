@@ -40,11 +40,9 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header border-bottom"
-                    style="margin-bottom: 0; display: flex; justify-content: space-between;">
-                    <h3 class="card-title">Faq Table</h3>
-                    <a href="{{ route('faq.create') }}" class="btn btn-primary">Add New Faq</a>
+                    style="margin-bottom: 0; display: flex; justify-content: flex-end;">
+                    <a href="{{ route('faq.create') }}" class="btn btn-primary">Add New</a>
                 </div>
-
                 <div class="card-body">
                     <div class="">
                         <table class="table table-bordered text-nowrap border-bottom w-100" id="datatable">
