@@ -87,22 +87,32 @@ class FaqController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'question'          => 'required|string|max:255', 
-                'answer'            => 'required|string|max:255',
+                'question_en'          => 'required|string|max:255',
+                'question_ar'          => 'required|string|max:255',
+                'answer_en'            => 'required|string|max:255',
+                'answer_ar'            => 'required|string|max:255',
             ]);
 
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            $data                   = new Faq();
-            $data->question         = $request->question;
-            $data->answer           = $request->answer;
+            $data = new Faq();
+            $data->setTranslations('question', [
+                'en' => $request->question_en,
+                'ar' => $request->question_ar
+            ]);
+
+            $data->setTranslations('answer', [
+                'en' => $request->answer_en,
+                'ar' => $request->answer_ar
+            ]);
+
             $data->save();
 
-            return redirect()->route('faq.index')->with('t-success', 'Faq save successfully');
-        } catch (\Exception) {
-            return redirect()->route('faq.index')->with('t-success', 'Faq failed created.');
+            return redirect()->route('faq.index')->with('t-success', 'FAQ Create successfully !!');
+        } catch (\Exception $e) {
+            return redirect()->route('faq.index')->with('t-error', 'FAQ failed created.' . $e->getMessage());
         }
     }
 
@@ -129,7 +139,7 @@ class FaqController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'question'          => 'nullable|string|max:255', 
+                'question'          => 'nullable|string|max:255',
                 'answer'            => 'nullable|string|max:255',
             ]);
 

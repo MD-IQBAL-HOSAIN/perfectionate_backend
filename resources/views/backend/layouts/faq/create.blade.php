@@ -45,18 +45,35 @@
                         @method('POST')
 
                         <div class="form-group">
-                            <label for="question" class="form-label">Faq Question:</label>
-                            <input type="text" class="form-control @error('question') is-invalid @enderror"
-                                   name="question" placeholder="Faq Question" id="question" value="{{ old('question') }}">
-                            @error('question')
+                            <label for="question_en" class="form-label">Faq Question (English)</label>
+                            <input type="text" class="form-control @error('question_en') is-invalid @enderror"
+                                   name="question_en" placeholder="Faq Question English" id="question_en" value="{{ old('question_en') }}">
+                            @error('question_en')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group" dir="rtl">
+                            <label for="question_ar" class="form-label">Faq Question (Arabic)</label>
+                            <input type="text" class="form-control @error('question_ar') is-invalid @enderror"
+                                   name="question_ar" placeholder="Faq Question Arabic" id="question_ar" value="{{ old('question_ar') }}">
+                            @error('question_ar')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="form-group">
-                            <label for="answer" class="form-label">Faq Answer:</label>
-                            <textarea class="form-control @error('answer') is-invalid @enderror" name="answer" id="answer" placeholder="Faq Answer" cols="30" rows="3">{{ old('answer') }}</textarea>
-                            @error('answer')
+                            <label for="answer_en" class="form-label">Faq Answer (English)</label>
+                            <textarea class="form-control @error('answer_en') is-invalid @enderror" name="answer_en" id="answer_en" placeholder="Faq Answer English" cols="30" rows="3">{{ old('answer_en') }}</textarea>
+                            @error('answer_en')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group" dir="rtl">
+                            <label for="answer_ar" class="form-label">Faq Answer (Arabic)</label>
+                            <textarea class="form-control @error('answer_ar') is-invalid @enderror" name="answer_ar" id="answer_ar" placeholder="Faq Answer Arabic" cols="30" rows="3">{{ old('answer_ar') }}</textarea>
+                            @error('answer_ar')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
